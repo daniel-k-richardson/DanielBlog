@@ -1,0 +1,6 @@
+@DanielBlog.API_HostAddress = http://localhost:5115
+
+GET {{DanielBlog.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
