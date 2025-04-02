@@ -1,11 +1,9 @@
-﻿using DanielBlog.Domain.blogs.ValueObjects;
+﻿namespace DanielBlog.Domain;
 
-namespace DanielBlog.Domain.blogs;
-
-public sealed class Blog : Entity
+public class Blog : Entity
 {
-    public Title Title { get; private set; }
-    public Content Content { get; private set; }
+    public Title Title { get; init; }
+    public Content Content { get; init; }
     public DateTime CreatedAt { get; init; }
 
     public Blog(
@@ -14,15 +12,6 @@ public sealed class Blog : Entity
         Content content)
     {
         Id = id;
-        Title = title;
-        Content = content;
-        CreatedAt = DateTime.UtcNow;
-    }
-    
-    public void Update(
-        Title title,
-        Content content)
-    {
         Title = title;
         Content = content;
     }
