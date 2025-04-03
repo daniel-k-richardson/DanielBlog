@@ -1,6 +1,5 @@
 using DanielBlog.Domain.blogs;
 using DanielBlog.Domain.blogs.ValueObjects;
-using DanielBlog.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +8,6 @@ namespace DanielBlog.Infrastructure.Persistence.DatabaseContext;
 public class AppDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Blog> Blogs { get; set; }
-    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,6 +26,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
                 v => new Content(v));
 
         base.OnModelCreating(modelBuilder);
+
     }
 }
 

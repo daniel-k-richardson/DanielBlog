@@ -4,31 +4,30 @@ using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 
 namespace DanielBlog.Infrastructure.Persistence.Repositories;
 
-public sealed class BlogRepository(AppDbContext context) : IBlogRepository
+public class BlogRepository(AppDbContext context) : IBlogRepository
 {
-    public async Task<Blog?> GetBlogByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Blog> CreateBlogAsync(Blog blog)
     {
-        return await context.Blogs.FindAsync(id, cancellationToken);
-    }
-
-    public async Task<Blog> CreateBlogAsync(Blog blog, CancellationToken cancellationToken)
-    {
-        await context.Blogs.AddAsync(blog, cancellationToken);
-        await context.SaveChangesAsync(cancellationToken);
+        await context.Blogs.AddAsync(blog);
+        await context.SaveChangesAsync();
 
         return blog;
     }
 
-    public async Task DeleteBlogAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteBlogAsync(Guid id)
     {
-        var blog = await context.Blogs.FindAsync(id, cancellationToken);
+        var blog = await context.Blogs.FindAsync(id);
+        if (blog is null)
+        {
+            throw new Exception("Blog not found");
+        }
         context.Blogs.Remove(blog);
-        await context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync();
     }
 
-    public async Task UpdateBlogAsync(Blog blog, CancellationToken cancellationToken)
+    public async Task UpdateBlogAsync(Blog blog)
     {
         context.Blogs.Update(blog);
-        await context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync();
     }
 }
