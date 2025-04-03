@@ -1,6 +1,6 @@
-using DanielBlog.Domain;
+using DanielBlog.Domain.blogs;
 
-namespace DanielBlog.UnitTests;
+namespace DanielBlog.UnitTests.blogs;
 
 public class BlogTests
 {
@@ -10,8 +10,8 @@ public class BlogTests
         var blogId = Guid.NewGuid();
 
         // Arrange
-        var blog1 = new Blog(blogId, new Title("Test Blog"),  new Content("Test Content"));
-        var blog2 = new Blog(blogId, new Title("Test Blog 2"),  new Content("Test Content 2"));
+        var blog1 = new Blog(blogId,"Test Blog","Test Content");
+        var blog2 = new Blog(blogId,"Test Blog 2","Test Content 2");
 
         // Act
         var areEqual = blog1.Equals(blog2);
@@ -26,8 +26,8 @@ public class BlogTests
         var blogId = Guid.NewGuid();
 
         // Arrange
-        var blog1 = new Blog(blogId, new Title("Test Blog"),  new Content("Test Content"));
-        var blog2 = new Blog(blogId, new Title("Test Blog 2"),  new Content("Test Content 2"));
+        var blog1 = new Blog(blogId, "Test Blog","Test Content");
+        var blog2 = new Blog(blogId,"Test Blog 2", "Test Content 2");
 
         // Act
         var areEqual = blog1 == blog2;
@@ -40,8 +40,8 @@ public class BlogTests
     public void Blog_should_not_be_equal()
     {
         // Arrange
-        var blog1 = new Blog(Guid.NewGuid(), new Title("Test Blog"),  new Content("Test Content"));
-        var blog2 = new Blog(Guid.NewGuid(), new Title("Test Blog 2"),  new Content("Test Content 2"));
+        var blog1 = new Blog(Guid.NewGuid(),"Test Blog","Test Content");
+        var blog2 = new Blog(Guid.NewGuid(),"Test Blog 2", "Test Content 2");
 
         // Act
         var areEqual = blog1.Equals(blog2);
@@ -54,8 +54,8 @@ public class BlogTests
     public void Blog_should_not_be_equal_using_operators()
     {
         // Arrange
-        var blog1 = new Blog(Guid.NewGuid(), new Title("Test Blog"),  new Content("Test Content"));
-        var blog2 = new Blog(Guid.NewGuid(), new Title("Test Blog 2"),  new Content("Test Content 2"));
+        var blog1 = new Blog(Guid.NewGuid(),"Test Blog","Test Content");
+        var blog2 = new Blog(Guid.NewGuid(),"Test Blog 2","Test Content 2");
 
         // Act
         var areNotEqual = blog1 != blog2;
@@ -63,5 +63,4 @@ public class BlogTests
         // Assert
         Assert.True(areNotEqual);
     }
-
 }

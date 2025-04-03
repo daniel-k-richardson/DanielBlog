@@ -1,4 +1,6 @@
-﻿namespace DanielBlog.Domain;
+﻿using DanielBlog.Domain.blogs.ValueObjects;
+
+namespace DanielBlog.Domain.blogs;
 
 public class Blog : Entity
 {
@@ -11,8 +13,9 @@ public class Blog : Entity
         Title title,
         Content content)
     {
-        Id = id;
-        Title = title;
-        Content = content;
+        this.Id = id;
+        this.Title = title;
+        this.Content = content;
+        this.CreatedAt = DateTime.UtcNow;
     }
 }
