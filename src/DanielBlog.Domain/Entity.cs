@@ -1,3 +1,5 @@
+using DanielBlog.Domain.blogs;
+
 namespace DanielBlog.Domain;
 
 public abstract class Entity : IEquatable<Entity>
