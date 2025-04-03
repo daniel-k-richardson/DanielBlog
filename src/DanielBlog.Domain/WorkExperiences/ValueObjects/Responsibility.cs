@@ -11,7 +11,7 @@ public record Responsibility
             throw new ArgumentException("Responsibility cannot be empty.", nameof(value));
         }
 
-        Value = value;
+        this.Value = value;
     }
 
     public static implicit operator Responsibility(string value) => new(value);

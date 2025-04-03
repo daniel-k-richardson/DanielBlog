@@ -11,7 +11,7 @@ public record JobTitle
             throw new ArgumentException("Job title cannot be empty.", nameof(value));
         }
 
-        Value = value;
+        this.Value = value;
     }
 
     public static implicit operator JobTitle(string value) => new(value);

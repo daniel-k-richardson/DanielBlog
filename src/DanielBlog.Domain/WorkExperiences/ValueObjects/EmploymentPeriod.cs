@@ -12,7 +12,7 @@ public record EmploymentPeriod
             throw new ArgumentException("End date cannot be earlier than start date.", nameof(end));
         }
 
-        Started = started;
-        End = end;
+        this.Started = started;
+        this.End = end;
     }
 }

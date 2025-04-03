@@ -11,7 +11,7 @@ public record Achievement
             throw new ArgumentException("Achievement cannot be empty.", nameof(achievement));
         }
 
-        Value = achievement;
+        this.Value = achievement;
     }
 
     public static implicit operator Achievement(string value) => new(value);
