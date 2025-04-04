@@ -2,10 +2,10 @@
 
 namespace DanielBlog.Domain.blogs;
 
-public class Blog : Entity
+public sealed class Blog : Entity
 {
-    public Title Title { get; init; }
-    public Content Content { get; init; }
+    public Title Title { get; private set; }
+    public Content Content { get; private set; }
     public DateTime CreatedAt { get; init; }
 
     public Blog(
@@ -17,5 +17,12 @@ public class Blog : Entity
         this.Title = title;
         this.Content = content;
         this.CreatedAt = DateTime.UtcNow;
+    }
+    public void Update(
+        Title title,
+        Content content)
+    {
+        this.Title = title;
+        this.Content = content;
     }
 }
