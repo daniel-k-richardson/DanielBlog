@@ -1,7 +1,7 @@
-using DanielBlog.API.Configurations.Interfaces;
+using DanielBlog.API.Configurations.Endpoints.Interfaces;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace DanielBlog.API.Configurations;
+namespace DanielBlog.API.Configurations.Endpoints;
 
 public static class EndpointExtensions
 {

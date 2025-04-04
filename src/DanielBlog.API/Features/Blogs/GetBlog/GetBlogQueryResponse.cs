@@ -1,6 +1,6 @@
 namespace DanielBlog.API.Features.Blogs.GetBlog;
 
-public record GetBlogQueryResponse
+public sealed class GetBlogQueryResponse
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

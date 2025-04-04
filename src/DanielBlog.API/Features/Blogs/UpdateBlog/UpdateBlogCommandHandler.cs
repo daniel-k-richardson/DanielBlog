@@ -1,9 +1,8 @@
-using DanielBlog.API.Mediators;
 using DanielBlog.Domain.blogs.Interfaces;
 
 namespace DanielBlog.API.Features.Blogs.UpdateBlog;
 
-public sealed class UpdateBlogCommandHandler(IBlogRepository blogRepository) : IRequestHandler<UpdateBlogCommand>
+public sealed class UpdateBlogCommandHandler(IBlogRepository blogRepository)
 {
     public async Task Handle(UpdateBlogCommand command, CancellationToken cancellationToken)
     {
