@@ -10,6 +10,7 @@ using DanielBlog.API.Features.Users.GetUserToken;
 using DanielBlog.Infrastructure.Persistence;
 using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -47,16 +48,6 @@ builder.Services.AddSwaggerGen(c =>
             },
             []
         }
-    });
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
     });
 });
 
@@ -103,8 +94,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseCors();
 
 // Register all endpoints
 var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
