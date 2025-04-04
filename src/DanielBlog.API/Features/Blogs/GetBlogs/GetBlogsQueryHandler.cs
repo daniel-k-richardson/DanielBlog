@@ -1,3 +1,4 @@
+using DanielBlog.API.Features.Blogs.GetBlog;
 using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,18 +6,23 @@ namespace DanielBlog.API.Features.Blogs.GetBlogs;
 
 public sealed class GetBlogsQueryHandler(AppDbContext context)
 {
-    public async Task<List<GetBlogsQueryResponse>> Handle(CancellationToken cancellationToken)
+    public async Task<GetBlogsQueryResponse> Handle(CancellationToken cancellationToken)
     {
         var blogs = await context.Blogs
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        return blogs.Select(x => new GetBlogsQueryResponse
+        var blogsResponse = new GetBlogsQueryResponse()
         {
-            Id = x.Id,
-            Title = x.Title.Value,
-            Content = x.Content.Value,
-            CreatedAt = x.CreatedAt,
-        }).ToList();
+            Blogs = blogs.Select(x => new GetBlogQueryResponse
+            {
+                Id = x.Id,
+                Title = x.Title.Value,
+                Content = x.Content.Value,
+                CreatedAt = x.CreatedAt,
+            }).ToList()
+        };
+
+        return blogsResponse;
     }
 }

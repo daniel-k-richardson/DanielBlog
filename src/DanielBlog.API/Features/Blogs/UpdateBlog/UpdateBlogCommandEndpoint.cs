@@ -6,7 +6,7 @@ public sealed class UpdateBlogCommandEndpoint : IEndpoint
 {
     public void DefineEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPut("api/blogs/{id:guid}", async (
+        endpoints.MapPost("api/blogs/{id:guid}", async (
                 UpdateBlogCommandHandler handler, 
                 Guid id, 
                 UpdateBlogCommand command, 
