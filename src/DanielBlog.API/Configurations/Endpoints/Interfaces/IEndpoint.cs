@@ -1,4 +1,4 @@
-namespace DanielBlog.API.Configurations.Interfaces;
+namespace DanielBlog.API.Configurations.Endpoints.Interfaces;
 
 public interface IEndpoint
 {
