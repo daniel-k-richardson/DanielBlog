@@ -1,10 +1,6 @@
-@DanielBlog.API_HostAddress = http://localhost:44351
+@DanielBlog.API_HostAddress = http://localhost:5115
 
-POST https://localhost:44351/api/blogs
+GET {{DanielBlog.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
-{
-  "title": "My New Blog",
-  "content": "This is the content of my new blog.",
-  "author": "Daniel"
-}
+###
