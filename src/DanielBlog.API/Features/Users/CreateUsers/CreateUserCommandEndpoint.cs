@@ -1,4 +1,5 @@
 using DanielBlog.API.Configurations.Endpoints.Interfaces;
+using DanielBlog.API.Mediators;
 
 namespace DanielBlog.API.Features.Users.CreateUsers;
 
@@ -7,9 +8,9 @@ public sealed class CreateUserCommandEndpoint : IEndpoint
     public void DefineEndpoints(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapPost("api/users",
-                async (CreateUserCommandHandler handler, CreateUserCommand command, CancellationToken cancellationToken) =>
+                async (Mediator mediator, CreateUserCommand command, CancellationToken cancellationToken) =>
                 {
-                    await handler.Handle(command, cancellationToken);
+                    await mediator.Send(command, cancellationToken);
                     return Results.Ok();
                 })
             .WithName("CreateUser")

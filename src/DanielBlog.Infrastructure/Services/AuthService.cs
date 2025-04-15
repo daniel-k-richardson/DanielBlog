@@ -7,16 +7,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DanielBlog.Infrastructure.Services;
 
-public sealed class AuthService
+public sealed class AuthService(IConfiguration configuration, IUserRepository userRepository)
 {
-    private readonly string _secretKey;
-    private readonly IUserRepository _userRepository;
-
-    public AuthService(IConfiguration configuration, IUserRepository userRepository)
-    {
-        _secretKey = configuration.GetValue<string>("SecretKey");
-        _userRepository = userRepository;
-    }
+    private readonly string _secretKey = configuration.GetValue<string>("SecretKey")!;
 
     public string GenerateToken(string username)
     {
@@ -34,12 +27,12 @@ public sealed class AuthService
 
     public async Task<bool> ValidateUserAsync(string username, string password)
     {
-        var user = await _userRepository.GetUserByUsernameAsync(username);
+        var user = await userRepository.GetUserByUsernameAsync(username);
         if (user == null)
         {
             return false;
         }
 
-        return password == user.Password;
+        return password == user.Password.Value;
     }
 }
