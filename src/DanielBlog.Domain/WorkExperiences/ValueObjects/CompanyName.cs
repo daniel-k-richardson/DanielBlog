@@ -11,7 +11,7 @@ public record CompanyName
             throw new ArgumentException("Company name cannot be empty.", nameof(value));
         }
 
-        this.Value = value;
+        Value = value;
     }
 
     public static implicit operator CompanyName(string value) => new(value);

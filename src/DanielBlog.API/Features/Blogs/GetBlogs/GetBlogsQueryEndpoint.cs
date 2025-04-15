@@ -1,4 +1,5 @@
 using DanielBlog.API.Configurations.Endpoints.Interfaces;
+using DanielBlog.API.Mediators;
 
 namespace DanielBlog.API.Features.Blogs.GetBlogs;
 
@@ -7,9 +8,9 @@ public sealed class GetBlogsQueryEndpoint : IEndpoint
     public void DefineEndpoints(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("api/blogs",
-                async (GetBlogsQueryHandler handler, CancellationToken cancellationToken) =>
+                async (Mediator mediator, CancellationToken cancellationToken) =>
                 {
-                    var blogs = await handler.Handle(cancellationToken);
+                    var blogs = await mediator.Send<GetBlogsQuery, GetBlogsQueryResponse>(new GetBlogsQuery(), cancellationToken);
                     return Results.Ok(blogs);
                 })
             .WithName("GetBlogs")

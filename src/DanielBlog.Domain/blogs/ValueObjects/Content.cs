@@ -1,3 +1,5 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions.ContentExceptions;
+
 namespace DanielBlog.Domain.blogs.ValueObjects
 {
     public record Content
@@ -8,10 +10,10 @@ namespace DanielBlog.Domain.blogs.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                throw new ArgumentException("Content cannot be empty", nameof(text));
+                throw new ContentIsNullOrWhiteSpaceException("Content cannot be empty");
             }
 
-            this.Value = text;
+            Value = text;
         }
 
         public static implicit operator Content(string value) => new(value);

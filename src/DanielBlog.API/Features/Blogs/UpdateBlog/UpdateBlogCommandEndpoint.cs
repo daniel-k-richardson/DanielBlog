@@ -1,4 +1,6 @@
+using System.Runtime.CompilerServices;
 using DanielBlog.API.Configurations.Endpoints.Interfaces;
+using DanielBlog.API.Mediators;
 
 namespace DanielBlog.API.Features.Blogs.UpdateBlog;
 
@@ -6,8 +8,8 @@ public sealed class UpdateBlogCommandEndpoint : IEndpoint
 {
     public void DefineEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPut("api/blogs/{id:guid}", async (
-                UpdateBlogCommandHandler handler, 
+        endpoints.MapPost("api/blogs/{id:guid}", async (
+                Mediator mediator, 
                 Guid id, 
                 UpdateBlogCommand command, 
                 CancellationToken cancellationToken) =>
@@ -17,7 +19,7 @@ public sealed class UpdateBlogCommandEndpoint : IEndpoint
                         return Results.BadRequest("Blog ID in the URL does not match the ID in the request body.");
                     }
 
-                    await handler.Handle(command, cancellationToken);
+                    await mediator.Send(command, cancellationToken);
                     return Results.Ok();
                 })
             .WithName("UpdateBlog")
