@@ -16,4 +16,13 @@ public static class EndpointExtensions
 
         services.TryAddEnumerable(serviceDescriptors);
     }
+    
+    public static void MapEndpoints(this WebApplication app)
+    {
+        var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
+        foreach (var endpoint in endpoints)
+        {
+            endpoint.DefineEndpoints(app);
+        }
+    }
 }

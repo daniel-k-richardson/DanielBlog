@@ -11,12 +11,11 @@ public sealed class GetBlogsQueryHandler(AppDbContext context)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
-        return blogs.Select(x => new GetBlogsQueryResponse
-        {
-            Id = x.Id,
-            Title = x.Title.Value,
-            Content = x.Content.Value,
-            CreatedAt = x.CreatedAt,
-        }).ToList();
+        return blogs.Select(x => new GetBlogsQueryResponse(
+            x.Id,
+            x.Title.Value,
+            x.Content.Value,
+            x.CreatedAt))
+            .ToList();
     }
 }

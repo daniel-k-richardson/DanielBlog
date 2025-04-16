@@ -12,14 +12,6 @@ public sealed class GetBlogQueryHandler(AppDbContext context)
             throw new Exception("Blog not found");
         }
 
-        var blogResponse = new GetBlogQueryResponse
-        {
-            Id = blog.Id,
-            Title = blog.Title.Value,
-            Content = blog.Content.Value,
-            CreatedAt = blog.CreatedAt
-        };
-
-        return blogResponse;
+        return new GetBlogQueryResponse(blog.Id, blog.Title.Value, blog.Content.Value, blog.CreatedAt);
     }
 }

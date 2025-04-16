@@ -1,12 +1,8 @@
 using System.Text;
+using DanielBlog.API.Configurations;
 using DanielBlog.API.Configurations.Endpoints;
 using DanielBlog.API.Configurations.Endpoints.Interfaces;
-using DanielBlog.API.Features.Blogs.CreateBlog;
-using DanielBlog.API.Features.Blogs.GetBlog;
-using DanielBlog.API.Features.Blogs.GetBlogs;
-using DanielBlog.API.Features.Blogs.UpdateBlog;
-using DanielBlog.API.Features.Users.CreateUsers;
-using DanielBlog.API.Features.Users.GetUserToken;
+using DanielBlog.API.Features;
 using DanielBlog.Infrastructure.Persistence;
 using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,40 +11,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "DanielBlog API", Version = "v1" });
-
-    // Add security definition
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "Bearer"
-    });
-
-    // Add security requirement
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            []
-        }
-    });
-});
+builder.Services.SwaggerSetup();
 
 builder.Services.AddCors(options =>
 {
@@ -62,12 +26,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddEndpoints();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddScoped<CreateBlogCommandHandler>();
-builder.Services.AddScoped<GetBlogQueryHandler>();
-builder.Services.AddScoped<GetBlogsQueryHandler>();
-builder.Services.AddScoped<UpdateBlogCommandHandler>();
-builder.Services.AddScoped<CreateUserCommandHandler>();
-builder.Services.AddScoped<GetUserTokenQueryHandler>();
+builder.Services.AddFeatureDependencies();
 
 builder.Services.AddAuthentication(x =>
     {
@@ -86,13 +45,12 @@ builder.Services.AddAuthentication(x =>
             ValidateAudience = false
         };
     });
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
-
 app.Services.EnsureDbCreated();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -100,17 +58,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseCors();
-
-// Register all endpoints
-var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
-foreach (var endpoint in endpoints)
-{
-    endpoint.DefineEndpoints(app);
-}
+app.MapEndpoints();
 
 app.Run();

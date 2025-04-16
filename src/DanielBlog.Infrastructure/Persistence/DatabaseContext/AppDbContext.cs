@@ -1,5 +1,4 @@
 using DanielBlog.Domain.blogs;
-using DanielBlog.Domain.blogs.ValueObjects;
 using DanielBlog.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,19 +12,7 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Blog>().HasKey(x => x.Id);
-
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.Title)
-            .HasConversion(
-                v => v.Value,
-                v => new Title(v));
-
-        modelBuilder.Entity<Blog>()
-            .Property(b => b.Content)
-            .HasConversion(
-                v => v.Value,
-                v => new Content(v));
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }

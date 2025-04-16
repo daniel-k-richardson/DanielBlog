@@ -2,7 +2,7 @@ using DanielBlog.API.Configurations.Endpoints.Interfaces;
 
 namespace DanielBlog.API.Features.Users.GetUserToken;
 
-public class GetUserTokenQueryEndpoint : IEndpoint
+public sealed class GetUserTokenQueryEndpoint : IEndpoint
 {
     public void DefineEndpoints(IEndpointRouteBuilder endpoints)
     {
