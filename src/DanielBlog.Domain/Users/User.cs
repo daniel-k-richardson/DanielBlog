@@ -7,10 +7,15 @@ public sealed class User : Entity
     public Username Username { get; init; }
     public Password Password { get; init; }
 
+    // Parameterless constructor for EF Core
+    private User() { }
+    
     public User(Guid id, Username username, Password password)
     {
         Id = id;
         Username = username;
         Password = password;
     }
+    
+
 }

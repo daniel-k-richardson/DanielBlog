@@ -1,5 +1,6 @@
 using DanielBlog.Domain.Users;
 using DanielBlog.Domain.Users.Interfaces;
+using DanielBlog.Domain.Users.ValueObjects;
 
 namespace DanielBlog.API.Features.Users.CreateUsers;
 
@@ -17,7 +18,8 @@ public sealed class CreateUserCommandHandler(IUserRepository repository)
         {
             throw new Exception("User already exists");
         }
-        var user = new User(Guid.NewGuid(), command.Name, command.Password);
+        
+        var user = new User(Guid.NewGuid(), command.Name, new Password(command.Password));
         await repository.CreateUserAsync(user, cancellationToken);
     }
 }

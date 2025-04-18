@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DanielBlog.Infrastructure.Persistence.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
@@ -16,11 +16,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 v => v.Value,
                 v => new Username(v));
         
-        builder
-            .Property(u => u.Password)
-            .HasConversion(
-                v => v.Value,
-                v => new Password(v));
+        builder.OwnsOne(u => u.Password, password =>
+        {
+            password.Property(p => p.HashedValue)
+                .HasColumnName("PasswordHash")
+                .IsRequired();
+
+            password.Property(p => p.Salt)
+                .HasColumnName("PasswordSalt")
+                .IsRequired();
+        });
 
     }
 }

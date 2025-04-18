@@ -1,16 +1,13 @@
 using System.Text;
 using DanielBlog.API.Configurations;
 using DanielBlog.API.Configurations.Endpoints;
-using DanielBlog.API.Configurations.Endpoints.Interfaces;
 using DanielBlog.API.Features;
 using DanielBlog.Infrastructure.Persistence;
 using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SwaggerSetup();
 

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DanielBlog.Infrastructure.Persistence.DatabaseContext;
 
-public class AppDbContext(DbContextOptions options) : DbContext(options)
+public sealed class AppDbContext(DbContextOptions options) : DbContext(options)
 {
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<User> Users { get; set; }

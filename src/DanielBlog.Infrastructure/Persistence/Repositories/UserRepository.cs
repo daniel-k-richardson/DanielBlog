@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DanielBlog.Infrastructure.Persistence.Repositories;
 
-public class UserRepository(AppDbContext context) : IUserRepository
+public sealed class UserRepository(AppDbContext context) : IUserRepository
 {
     public async Task<User> CreateUserAsync(User user, CancellationToken cancellationToken = default)
     {

@@ -9,8 +9,15 @@ public sealed class CreateBlogQueryEndpoint : IEndpoint
         endpoints.MapPost("api/blogs",
             async (CreateBlogCommandHandler handler, CreateBlogCommand command, CancellationToken cancellationToken) =>
             {
-                await handler.Handle(command, cancellationToken);
-                return Results.Ok();
+                try
+                {
+                    await handler.Handle(command, cancellationToken);
+                    return Results.Ok();
+                }
+                catch (ArgumentException ex)
+                {
+                    return Results.Problem(ex.Message, statusCode: 400);
+                }
             })
             .WithName("CreateBlog")
             .WithTags("Blogs")

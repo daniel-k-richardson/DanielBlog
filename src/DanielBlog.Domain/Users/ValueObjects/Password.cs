@@ -5,40 +5,63 @@ namespace DanielBlog.Domain.Users.ValueObjects;
 
 public record Password
 {
-    public string Value { get; init; }
+    public string HashedValue { get; init; }
+    public string Salt { get; init; }
+    
+    public Password(string hashedValue, string salt)
+    {
+        if (string.IsNullOrWhiteSpace(hashedValue))
+        {
+            throw new ArgumentException("Hashed value cannot be empty.");
+        }
 
+        if (string.IsNullOrWhiteSpace(salt))
+        {
+            throw new ArgumentException("Salt cannot be empty.");
+        }
+
+        HashedValue = hashedValue;
+        Salt = salt;
+    }
+    
     public Password(string password)
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            // todo add custom exception
+            throw new ArgumentException("Password cannot be empty.");
         }
 
-        if (password.Length is < 8 or > 20)
-        {
-            // todo add custom exception
-        }
-
-        Value = HashPassword(password);
+        Salt = GenerateSalt();
+        HashedValue = HashPassword(password, Salt);
     }
-    
-    public static implicit operator Password(string value) => new(value);
 
-    private static string HashPassword(string password)
+    private static string GenerateSalt()
     {
-        var salt = new byte[128 / 8];
+        var salt = new byte[16];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(salt);
         }
+        return Convert.ToBase64String(salt);
+    }
 
-        var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+    private static string HashPassword(string password, string salt)
+    {
+        var saltBytes = Convert.FromBase64String(salt);
+        return Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password,
-            salt: salt,
+            salt: saltBytes,
             prf: KeyDerivationPrf.HMACSHA256,
             iterationCount: 10000,
             numBytesRequested: 256 / 8));
+    }
 
-        return hashed;
+    public bool Verify(string password)
+    {
+        var hashedInput = HashPassword(password, Salt);
+        Console.WriteLine($"Stored Hash: {HashedValue}");
+        Console.WriteLine($"Input Hash: {hashedInput}");
+        Console.WriteLine($"Salt: {Salt}");
+        return hashedInput == HashedValue;
     }
 }

@@ -18,6 +18,7 @@ public sealed class Blog : Entity
         this.Content = content;
         this.CreatedAt = DateTime.UtcNow;
     }
+    
     public void Update(
         Title title,
         Content content)
