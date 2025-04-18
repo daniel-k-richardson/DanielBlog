@@ -1,3 +1,5 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions.ContentExceptions;
+
 namespace DanielBlog.Domain.blogs.ValueObjects
 {
     public record Content
@@ -8,7 +10,7 @@ namespace DanielBlog.Domain.blogs.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                throw new ArgumentException("Content cannot be empty", nameof(text));
+                throw new ContentNullOrEmptyException("Content cannot be empty");
             }
 
             Value = text;

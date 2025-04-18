@@ -1,3 +1,4 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions.ContentExceptions;
 using DanielBlog.Domain.blogs.ValueObjects;
 
 namespace DanielBlog.UnitTests.blogs
@@ -40,7 +41,7 @@ namespace DanielBlog.UnitTests.blogs
             string emptyContent = string.Empty;
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Content(emptyContent));
+            Assert.Throws<ContentNullOrEmptyException>(() => new Content(emptyContent));
         }
     }
 }

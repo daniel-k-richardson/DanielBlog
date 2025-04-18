@@ -1,3 +1,5 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions.TitleExceptions;
+
 namespace DanielBlog.Domain.blogs.ValueObjects
 {
     public record Title
@@ -8,12 +10,12 @@ namespace DanielBlog.Domain.blogs.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                throw new ArgumentException("Title cannot be empty", nameof(text));
+                throw new TitleNullOrEmptyException("Title cannot be empty");
             }
 
             if (text.Length > 100)
             {
-                throw new ArgumentException("Title cannot be longer than 100 characters", nameof(text));
+                throw new TitleLengthException("Title cannot be longer than 100 characters");
             }
 
             Value = text;

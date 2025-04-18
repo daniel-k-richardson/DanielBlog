@@ -9,17 +9,20 @@ public record Password
     public string HashedValue { get; init; }
     public string Salt { get; init; }
     
+    // Parameterless constructor for EF Core
+    private Password() { }
+    
     public Password(string password)
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            throw new PasswordNullOrEmpty("Password cannot be empty");
+            throw new PasswordNullOrEmptyException("Password cannot be empty");
         }
         
         Salt = GenerateSalt();
         HashedValue = HashPassword(password, Salt);
     }
-
+    
     private static string GenerateSalt()
     {
         var salt = new byte[16];

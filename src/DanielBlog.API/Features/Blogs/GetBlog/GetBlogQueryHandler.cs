@@ -10,7 +10,7 @@ public sealed class GetBlogQueryHandler(AppDbContext context)
         var blog = await context.Blogs.FindAsync(id, cancellationToken);
         if (blog is null)
         {
-            throw new BlogNotFound("blog not found");
+            throw new BlogNotFoundException("blog not found");
         }
 
         return new GetBlogQueryResponse(blog.Id, blog.Title.Value, blog.Content.Value, blog.CreatedAt);

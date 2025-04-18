@@ -1,3 +1,4 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions.TitleExceptions;
 using DanielBlog.Domain.blogs.ValueObjects;
 
 namespace DanielBlog.UnitTests.blogs
@@ -39,7 +40,7 @@ namespace DanielBlog.UnitTests.blogs
             var emptyTitle = string.Empty;
 
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new Title(emptyTitle));
+            Assert.Throws<TitleNullOrEmptyException>(() => new Title(emptyTitle));
         }
     }
 }
