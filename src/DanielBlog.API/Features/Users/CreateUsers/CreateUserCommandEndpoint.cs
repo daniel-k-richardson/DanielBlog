@@ -9,8 +9,15 @@ public sealed class CreateUserCommandEndpoint : IEndpoint
         endpoints.MapPost("api/users",
                 async (CreateUserCommandHandler handler, CreateUserCommand command, CancellationToken cancellationToken) =>
                 {
-                    await handler.Handle(command, cancellationToken);
-                    return Results.Ok();
+                    try
+                    {
+                        await handler.Handle(command, cancellationToken);
+                        return Results.Ok();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        return Results.Problem(type: "Bad Request", title: ex.GetType().Name, detail: ex.Message, statusCode: 400);
+                    }
                 })
             .WithName("CreateUser")
             .WithTags("Users");

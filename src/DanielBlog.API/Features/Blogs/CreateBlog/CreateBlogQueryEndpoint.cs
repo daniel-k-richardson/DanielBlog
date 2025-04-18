@@ -16,7 +16,7 @@ public sealed class CreateBlogQueryEndpoint : IEndpoint
                 }
                 catch (ArgumentException ex)
                 {
-                    return Results.Problem(ex.Message, statusCode: 400);
+                    return Results.Problem(type: "Bad Request", title: ex.GetType().Name, detail: ex.Message, statusCode: 400);
                 }
             })
             .WithName("CreateBlog")

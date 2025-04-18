@@ -13,17 +13,17 @@ public sealed class Blog : Entity
         Title title,
         Content content)
     {
-        this.Id = id;
-        this.Title = title;
-        this.Content = content;
-        this.CreatedAt = DateTime.UtcNow;
+        Id = id;
+        Title = title;
+        Content = content;
+        CreatedAt = DateTime.UtcNow;
     }
     
     public void Update(
         Title title,
         Content content)
     {
-        this.Title = title;
-        this.Content = content;
+        Title = title;
+        Content = content;
     }
 }

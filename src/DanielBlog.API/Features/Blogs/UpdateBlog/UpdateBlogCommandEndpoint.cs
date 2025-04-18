@@ -14,7 +14,7 @@ public sealed class UpdateBlogCommandEndpoint : IEndpoint
                 {
                     if (id != command.Id)
                     {
-                        return Results.BadRequest("Blog ID in the URL does not match the ID in the request body.");
+                        return Results.Problem(type: "Bad Request", title: "Blog ID mismatch", statusCode: 400);
                     }
 
                     await handler.Handle(command, cancellationToken);

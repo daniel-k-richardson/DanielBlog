@@ -16,7 +16,7 @@ namespace DanielBlog.Domain.blogs.ValueObjects
                 throw new ArgumentException("Title cannot be longer than 100 characters", nameof(text));
             }
 
-            this.Value = text;
+            Value = text;
         }
 
         public static implicit operator Title(string value) => new(value);

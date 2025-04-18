@@ -1,3 +1,4 @@
+using DanielBlog.Domain.blogs.Exceptions.BlogExceptions;
 using DanielBlog.Infrastructure.Persistence.DatabaseContext;
 
 namespace DanielBlog.API.Features.Blogs.GetBlog;
@@ -9,7 +10,7 @@ public sealed class GetBlogQueryHandler(AppDbContext context)
         var blog = await context.Blogs.FindAsync(id, cancellationToken);
         if (blog is null)
         {
-            throw new Exception("Blog not found");
+            throw new BlogNotFound("blog not found");
         }
 
         return new GetBlogQueryResponse(blog.Id, blog.Title.Value, blog.Content.Value, blog.CreatedAt);

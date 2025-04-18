@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using DanielBlog.Domain.Users.UsersExceptions;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace DanielBlog.Domain.Users.ValueObjects;
@@ -8,29 +9,13 @@ public record Password
     public string HashedValue { get; init; }
     public string Salt { get; init; }
     
-    public Password(string hashedValue, string salt)
-    {
-        if (string.IsNullOrWhiteSpace(hashedValue))
-        {
-            throw new ArgumentException("Hashed value cannot be empty.");
-        }
-
-        if (string.IsNullOrWhiteSpace(salt))
-        {
-            throw new ArgumentException("Salt cannot be empty.");
-        }
-
-        HashedValue = hashedValue;
-        Salt = salt;
-    }
-    
     public Password(string password)
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            throw new ArgumentException("Password cannot be empty.");
+            throw new PasswordNullOrEmpty("Password cannot be empty");
         }
-
+        
         Salt = GenerateSalt();
         HashedValue = HashPassword(password, Salt);
     }
@@ -59,9 +44,6 @@ public record Password
     public bool Verify(string password)
     {
         var hashedInput = HashPassword(password, Salt);
-        Console.WriteLine($"Stored Hash: {HashedValue}");
-        Console.WriteLine($"Input Hash: {hashedInput}");
-        Console.WriteLine($"Salt: {Salt}");
         return hashedInput == HashedValue;
     }
 }

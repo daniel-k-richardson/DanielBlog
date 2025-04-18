@@ -7,14 +7,12 @@ public sealed class UpdateBlogCommandHandler(IBlogRepository blogRepository)
     public async Task Handle(UpdateBlogCommand command, CancellationToken cancellationToken)
     {
         var blog = await blogRepository.GetBlogByIdAsync(command.Id, cancellationToken);
-
         if (blog is null)
         {
             throw new ArgumentException($"Blog with ID {command.Id} not found.");
         }
 
         blog.Update(command.Title, command.Content);
-
         await blogRepository.UpdateBlogAsync(blog, cancellationToken);
 
     }

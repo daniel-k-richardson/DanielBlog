@@ -10,12 +10,12 @@ public record Username
     {
         if (string.IsNullOrWhiteSpace(username))
         {
-            throw new UsernameIsNullOrEmptyException("Username cannot be empty");
+            throw new UsernameNullOrEmpty("Username cannot be empty");
         }
         
         if (username.Length is < 5 or > 20)
         {
-            throw new UsernameLengthException("Username must be between 5 and 20 characters");
+            throw new InvalidUsernameLength("Username must be between 5 and 20 characters");
         }
 
         Value = username;

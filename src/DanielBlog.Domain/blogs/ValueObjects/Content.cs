@@ -11,7 +11,7 @@ namespace DanielBlog.Domain.blogs.ValueObjects
                 throw new ArgumentException("Content cannot be empty", nameof(text));
             }
 
-            this.Value = text;
+            Value = text;
         }
 
         public static implicit operator Content(string value) => new(value);

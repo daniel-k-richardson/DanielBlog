@@ -10,13 +10,13 @@ public sealed class CreateUserCommandHandler(IUserRepository repository)
     {
         if (await repository.MasterUserAlreadyExistsAsync(cancellationToken))
         {
-            throw new Exception("Master user already exists");
+            throw new ArgumentException("Master user already exists");
         }
         
         var exiting = await repository.GetUserByUsernameAsync(command.Name, cancellationToken);
         if (exiting is not null)
         {
-            throw new Exception("User already exists");
+            throw new AggregateException("User already exists");
         }
         
         var user = new User(Guid.NewGuid(), command.Name, new Password(command.Password));

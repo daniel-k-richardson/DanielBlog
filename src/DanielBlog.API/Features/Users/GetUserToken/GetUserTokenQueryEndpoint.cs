@@ -17,7 +17,7 @@ public sealed class GetUserTokenQueryEndpoint : IEndpoint
                     }
                     catch (ArgumentException ex)
                     {
-                        return Results.Problem(ex.Message, statusCode: 400, title: "Invalid credentials", type:"Bad Request");
+                        return Results.Problem(type: "Bad Request", title: ex.GetType().Name, detail: ex.Message, statusCode: 400);
                     }
                 })
             .WithName("GetUserToken")

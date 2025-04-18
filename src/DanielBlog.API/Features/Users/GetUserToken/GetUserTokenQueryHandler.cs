@@ -1,4 +1,5 @@
 using DanielBlog.Domain.Users.Interfaces;
+using DanielBlog.Domain.Users.UsersExceptions;
 using DanielBlog.Infrastructure.Services;
 
 namespace DanielBlog.API.Features.Users.GetUserToken;
@@ -9,7 +10,7 @@ public sealed class GetUserTokenQueryHandler(AuthService authService)
     {
         if (!await authService.ValidateUserAsync(getUserTokenQuery.Username, getUserTokenQuery.Password))
         {
-            throw new ArgumentException("Invalid username or password");
+            throw new FailedToValidateUser("Invalid username or password");
         }
 
         var token = authService.GenerateToken(getUserTokenQuery.Username);
