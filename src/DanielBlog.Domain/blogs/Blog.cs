@@ -9,13 +9,12 @@ public sealed class Blog : Entity
     public DateTime CreatedAt { get; init; }
 
     public Blog(
-        Guid id,
         Title title,
         Content content)
     {
-        Id = id;
         Title = title;
         Content = content;
+        Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
     }
     

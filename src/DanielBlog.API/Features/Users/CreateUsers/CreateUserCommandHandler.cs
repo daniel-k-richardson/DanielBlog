@@ -19,7 +19,7 @@ public sealed class CreateUserCommandHandler(IUserRepository repository)
             throw new AggregateException("User already exists");
         }
         
-        var user = new User(Guid.NewGuid(), command.Name, new Password(command.Password));
+        var user = new User(command.Name, new Password(command.Password));
         await repository.CreateUserAsync(user, cancellationToken);
     }
 }

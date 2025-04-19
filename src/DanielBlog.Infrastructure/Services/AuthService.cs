@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DanielBlog.Domain.Users.Interfaces;
-using DanielBlog.Domain.Users.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,11 +30,6 @@ public sealed class AuthService(IConfiguration configuration, IUserRepository us
     public async Task<bool> ValidateUserAsync(string username, string password)
     {
         var user = await userRepository.GetUserByUsernameAsync(username);
-        if (user is null)
-        {
-            return false;
-        }
-
-        return user.Password.Verify(password);
+        return user is not null && user.Password.Verify(password);
     }
 }

@@ -10,6 +10,7 @@ public sealed class BlogConfiguration : IEntityTypeConfiguration<Blog>
     public void Configure(EntityTypeBuilder<Blog> builder)
     {
         builder.HasKey(x => x.Id);
+        
         builder
             .Property(b => b.Title)
             .HasConversion(

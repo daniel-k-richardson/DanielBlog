@@ -1,4 +1,3 @@
-using DanielBlog.Domain.Users.Interfaces;
 using DanielBlog.Domain.Users.UsersExceptions;
 using DanielBlog.Infrastructure.Services;
 

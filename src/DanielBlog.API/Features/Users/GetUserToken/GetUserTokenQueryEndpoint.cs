@@ -1,5 +1,4 @@
 using DanielBlog.API.Configurations.Endpoints.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DanielBlog.API.Features.Users.GetUserToken;
 

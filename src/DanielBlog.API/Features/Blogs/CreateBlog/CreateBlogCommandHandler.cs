@@ -7,7 +7,7 @@ public sealed class CreateBlogCommandHandler(IBlogRepository blogRepository)
 {
     public async Task Handle(CreateBlogCommand command, CancellationToken cancellationToken)
     {
-        var blog = new Blog(Guid.NewGuid(), command.Title, command.Content);
+        var blog = new Blog(command.Title, command.Content);
         await blogRepository.CreateBlogAsync(blog, cancellationToken);
     }
 }
